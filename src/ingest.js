@@ -13,9 +13,9 @@ async function getEmbedding(text, openai) {
 }
 
 async function ingest() {
-  if (!config.openaiApiKey) {
-    console.error('Error: OPENAI_API_KEY environment variable is required.');
-    process.exit(1);
+  if (!config.openaiApiKey || config.openaiApiKey === 'sk-placeholder') {
+    console.log('OPENAI_API_KEY not set. Skipping embedding generation. The chatbot will use keyword-based matching instead.');
+    process.exit(0);
   }
 
   const openai = new OpenAI({ apiKey: config.openaiApiKey });
